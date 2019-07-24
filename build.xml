@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="jar" name="Create Runnable Jar">
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.jarfile" value="${dir.buildfile}"/>
+	<property name="compile-encoding" value="UTF-8" />
+	
+	<path id="classpath.dependencies">
+	    <pathelement location="${dir.buildfile}/libs/ais-lib-cli-2.2.jar" />
+	    <pathelement location="${dir.buildfile}/libs/ais-lib-communication-2.2.jar" />
+		<pathelement location="${dir.buildfile}/libs/ais-lib-messages-2.2.jar" />
+		<pathelement location="${dir.buildfile}/libs/ais-lib-utils-2.2.jar" />
+		<pathelement location="${dir.buildfile}/libs/aisutils.jar" />		
+	  </path>
+	
+	<target name="jar" >
+		<mkdir dir="bin"/>
+			<delete dir="bin"/>
+		<mkdir dir="bin"/>
+		<javac encoding="${compile-encoding}" srcdir="src"  destdir="bin" includes="**/*.java" fork="false">
+			<classpath refid="classpath.dependencies"/>
+		</javac>
+		<jar destfile="${dir.jarfile}/AisCaster.jar">
+			<manifest>
+				<attribute name="Main-Class" value="pt.lsts.aiscaster.AisCaster"/>
+			</manifest>
+			            
+			<fileset dir="${dir.buildfile}/bin"/>
+	        <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/ais-lib-cli-2.2.jar"/>
+	        <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/ais-lib-communication-2.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/ais-lib-messages-2.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/ais-lib-utils-2.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/aisutils.jar"/>			
+		</jar>
+	</target>
+</project>
