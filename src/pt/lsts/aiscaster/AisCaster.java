@@ -64,8 +64,6 @@ public class AisCaster {
 				track.getCourseOverGround().doubleValue(), track.getSpeedOverGround().doubleValue(),
 				track.getTrueHeading().doubleValue(), track.getShipName(), track.getShipType().toString());		
 	
-		System.out.println(ship);
-
 		try {
 			String RIPPLES_URL = "https://ripples.lsts.pt/ais";
 			URL url = new URL(RIPPLES_URL);
