@@ -7,13 +7,13 @@ public class AisShip {
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("\"yyyy-MM-dd HH:mm:ss Z\"");
 	
-	public final long mmsi, tstamp;
+	public final long mmsi, timestamp;
 	public final double latitude, longitude, cog, sog, heading;
 	public final String name, type;		
 
-	public AisShip(long mmsi, long tstamp, double latitude, double longitude, double cog, double sog, double heading, String name, String type) {
+	public AisShip(long mmsi, long timestamp, double latitude, double longitude, double cog, double sog, double heading, String name, String type) {
 		this.mmsi = mmsi;
-		this.tstamp = tstamp;
+		this.timestamp = timestamp;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.cog = cog;
@@ -27,7 +27,7 @@ public class AisShip {
 	public AisShip(String csvString) throws ParseException {
 		String[] parts = csvString.split(",");
 		mmsi = Long.valueOf(parts[0]);
-		tstamp = sdf.parse(parts[1]).getTime();
+		timestamp = sdf.parse(parts[1]).getTime();
 		latitude = Double.valueOf(parts[2]);
 		longitude = Double.valueOf(parts[3]);
 		cog = Double.valueOf(parts[4]);

@@ -7,9 +7,10 @@
 	<path id="classpath.dependencies">
 	    <pathelement location="${dir.buildfile}/libs/ais-lib-cli-2.2.jar" />
 	    <pathelement location="${dir.buildfile}/libs/ais-lib-communication-2.2.jar" />
-		<pathelement location="${dir.buildfile}/libs/ais-lib-messages-2.2.jar" />
-		<pathelement location="${dir.buildfile}/libs/ais-lib-utils-2.2.jar" />
-		<pathelement location="${dir.buildfile}/libs/aisutils.jar" />		
+			<pathelement location="${dir.buildfile}/libs/ais-lib-messages-2.2.jar" />
+			<pathelement location="${dir.buildfile}/libs/ais-lib-utils-2.2.jar" />
+			<pathelement location="${dir.buildfile}/libs/aisutils.jar" />		
+			<pathelement location="${dir.buildfile}/libs/gson-2.8.5.jar" />
 	  </path>
 	
 	<target name="jar" >
@@ -29,7 +30,8 @@
 	        <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/ais-lib-communication-2.2.jar"/>
 			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/ais-lib-messages-2.2.jar"/>
 			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/ais-lib-utils-2.2.jar"/>
-			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/aisutils.jar"/>			
+			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/aisutils.jar"/>	
+			<zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/libs/gson-2.8.5.jar" />		
 		</jar>
 	</target>
 </project>
