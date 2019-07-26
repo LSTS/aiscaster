@@ -62,36 +62,42 @@ public class AisCaster {
 		AisShip ship = new AisShip(track.getMmsi(), track.getTimeOfLastUpdate().toEpochMilli(),
 				track.getLatitude().doubleValue(), track.getLongitude().doubleValue(),
 				track.getCourseOverGround().doubleValue(), track.getSpeedOverGround().doubleValue(),
-				track.getTrueHeading().doubleValue(), track.getShipName(), track.getShipType().toString());		
-	
-		try {
-			String RIPPLES_URL = "https://ripples.lsts.pt/ais";
-			URL url = new URL(RIPPLES_URL);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setDoOutput(true);
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type", "application/json");
+				track.getTrueHeading().doubleValue(), track.getShipName(), track.getShipType().getCode());
+				
+		if (coordsValid(ship.latitude,ship.longitude)) {
+			try {
+				String RIPPLES_URL = "https://ripples.lsts.pt/ais";
+				URL url = new URL(RIPPLES_URL);
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				connection.setDoOutput(true);
+				connection.setRequestMethod("POST");
+				connection.setRequestProperty("Content-Type", "application/json");
 
-			Gson gson = new Gson();
-			String jsonShip = gson.toJson(ship);
-			DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-			out.writeBytes(jsonShip);
-			out.flush();
-			out.close();
+				Gson gson = new Gson();
+				String jsonShip = gson.toJson(ship);
+				DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+				out.writeBytes(jsonShip);
+				out.flush();
+				out.close();
 
-			Integer responseCode = connection.getResponseCode();
-			if (responseCode == HttpURLConnection.HTTP_OK) {
-				logger.info("Sent " + ship.toString() + " to " + RIPPLES_URL);
-			} else {
-				logger.info("Received response code " + responseCode + " from " + RIPPLES_URL);
+				Integer responseCode = connection.getResponseCode();
+				if (responseCode == HttpURLConnection.HTTP_OK) {
+					logger.info("Sent " + ship.toString() + " to " + RIPPLES_URL);
+				} else {
+					logger.info("Received response code " + responseCode + " from " + RIPPLES_URL);
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
+		} else {
+			logger.warn("Received invalid ship coordinates [" + ship.latitude + "," + ship.longitude + "]");
 		}
 	}
 
+	private boolean coordsValid(double latitude, double longitude) {
+		return Math.abs(latitude) <= 90 && Math.abs(longitude) <= 180;
+	}
 	
-
 	public static void main(String[] args) throws Exception {
 		if (args.length != 1) {
 			System.err.println("Usage: java -jar AisCaster.jar <HOST>:<PORT>");
@@ -103,5 +109,4 @@ public class AisCaster {
 		
 		new AisCaster(host, port);		
 	}
-
 }

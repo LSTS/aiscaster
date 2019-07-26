@@ -9,9 +9,10 @@ public class AisShip {
 	
 	public final long mmsi, timestamp;
 	public final double latitude, longitude, cog, sog, heading;
-	public final String name, type;		
+	public final String name;	
+	public final Integer type;
 
-	public AisShip(long mmsi, long timestamp, double latitude, double longitude, double cog, double sog, double heading, String name, String type) {
+	public AisShip(long mmsi, long timestamp, double latitude, double longitude, double cog, double sog, double heading, String name, Integer type) {
 		this.mmsi = mmsi;
 		this.timestamp = timestamp;
 		this.latitude = latitude;
@@ -20,10 +21,9 @@ public class AisShip {
 		this.sog = sog;
 		this.heading = heading;
 		this.name = name.replaceAll("\"", "").replaceAll("\\.","").replaceAll("^\\-", "");
-		
 		this.type = type;
-		
 	}
+
 	public AisShip(String csvString) throws ParseException {
 		String[] parts = csvString.split(",");
 		mmsi = Long.valueOf(parts[0]);
@@ -34,12 +34,12 @@ public class AisShip {
 		sog = Double.valueOf(parts[5]);
 		heading = Double.valueOf(parts[6]);
 		name = parts[9].replaceAll("\"", "").replaceAll("\\.","");
-		type = parts[11];
+		type = Integer.parseInt(parts[11]);
 	}
 	
 	@Override
 	public String toString() {
-		return name+" at "+latitude+" / "+longitude+", "+sog;
+		return name + " at " + latitude + " / " + longitude + ", " + sog;
 	}
 }
 
